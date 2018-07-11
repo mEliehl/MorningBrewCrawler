@@ -1,8 +1,10 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using DbUp;
+using Microsoft.Extensions.Configuration;
 
 namespace SqlServer.Migration
 {
@@ -10,10 +12,14 @@ namespace SqlServer.Migration
     {
         static void Main(string[] args)
         {
-            var connectionString =
-                args.FirstOrDefault()
-                ?? "Data Source=localhost;Initial Catalog=MorningBrew;Persist Security Info=True;User ID=sa;Password=Crawler_Brew";
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddEnvironmentVariables();
 
+            IConfigurationRoot configuration = builder.Build();
+
+            var connectionString =configuration.GetConnectionString("default");
             EnsureDatabase.For.SqlDatabase(connectionString);
             
             var upgrader =

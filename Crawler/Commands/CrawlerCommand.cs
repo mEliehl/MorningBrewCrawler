@@ -11,7 +11,7 @@ using Crawler.Repositories;
 
 namespace Crawler.Commands
 {
-    public class CrawlerCommand
+    public class CrawlerCommand : ICommand
     {
         public CrawlerCommand(int to, int from)
         {
@@ -23,7 +23,7 @@ namespace Crawler.Commands
         public int From { get; private set; }
     }
 
-    public class CrawlerCommandHandler
+    public class CrawlerCommandHandler : ICommandHandler<CrawlerCommand>
     {
         readonly IHttpHandler httpHandler;
         readonly IArticles articles; 
