@@ -35,7 +35,7 @@ namespace Crawler.Commands
             this.articles = articles;
         }
 
-        public async Task HandlerAsync(CrawlerCommand command)
+        public async Task HandleAsync(CrawlerCommand command)
         {
             var entities = new List<Article>();
             for (int i = command.To; i <= command.From; i++)
