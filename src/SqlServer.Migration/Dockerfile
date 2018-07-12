@@ -2,11 +2,11 @@ FROM microsoft/dotnet:2.1-sdk AS build
 WORKDIR /app
 
 # Copy csproj and restore as distinct layers
-COPY SqlServer.Migration/*.csproj ./
+COPY ./src/SqlServer.Migration/*.csproj ./
 RUN dotnet restore
 
 # Copy everything else and build
-COPY ./SqlServer.Migration/. ./
+COPY ./src/SqlServer.Migration/. ./
 RUN dotnet publish -c Release -o out
 
 # Build runtime image

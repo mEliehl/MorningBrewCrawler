@@ -1,0 +1,27 @@
+version: '3.5'
+
+services:
+  crawler-sqlserver:
+    # image: microsoft/mssql-server-linux
+    image: microsoft/mssql-server-windows-developer
+    hostname: crawler-sqlserver
+    ports:
+      - "1433:1433"
+    environment:
+      SA_PASSWORD: "Crawler_Brew"
+      ACCEPT_EULA: "Y"
+    networks:
+      crawler-nw:
+  sqlserver-migration:
+    depends_on:
+      - crawler-sqlserver
+    build:
+      context: .
+      dockerfile: .src/SqlServer.Migration/Dockerfile
+    environment:
+      - ConnectionStrings:default=Data Source=crawler-sqlserver;Initial Catalog=MorningBrew;Persist Security Info=True;User ID=sa;Password=Crawler_Brew
+    networks:
+      crawler-nw:  
+networks:
+  crawler-nw:
+    name: crawler-nw
