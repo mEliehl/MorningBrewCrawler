@@ -4,18 +4,18 @@ namespace Crawler.Mappers
 {
     public class EnglishMonths
     {
-        private const string January = "January";
-        private const string February = "February";
-        private const string March = "March";
-        private const string April = "April";
-        private const string May = "May";
-        private const string June = "June";
-        private const string July = "July";
-        private const string August = "August";
-        private const string September = "September";
-        private const string October = "October";
-        private const string November = "November";
-        private const string December = "December";
+        public const string January = "January";
+        public const string February = "February";
+        public const string March = "March";
+        public const string April = "April";
+        public const string May = "May";
+        public const string June = "June";
+        public const string July = "July";
+        public const string August = "August";
+        public const string September = "September";
+        public const string October = "October";
+        public const string November = "November";
+        public const string December = "December";
 
         public static int Map(string Month)
         {

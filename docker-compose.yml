@@ -2,8 +2,8 @@ version: '3.5'
 
 services:
   crawler-sqlserver:
-    # image: microsoft/mssql-server-linux
-    image: microsoft/mssql-server-windows-developer
+    image: microsoft/mssql-server-linux
+    # image: microsoft/mssql-server-windows-developer
     hostname: crawler-sqlserver
     ports:
       - "1433:1433"
@@ -17,7 +17,7 @@ services:
       - crawler-sqlserver
     build:
       context: .
-      dockerfile: .src/SqlServer.Migration/Dockerfile
+      dockerfile: ./src/SqlServer.Migration/Dockerfile
     environment:
       - ConnectionStrings:default=Data Source=crawler-sqlserver;Initial Catalog=MorningBrew;Persist Security Info=True;User ID=sa;Password=Crawler_Brew
     networks:

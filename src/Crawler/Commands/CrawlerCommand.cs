@@ -17,13 +17,19 @@ namespace Crawler.Commands
         {
             Limit = limit;
         }
-        public int Limit { get;}
+        public int Limit { get; }
+    }
+
+    class NewArticles
+    {
+        public List<Article> Articles { get; set; } = new List<Article>();
+        public bool HasMore { get; set; }
     }
 
     public class CrawlerCommandHandler : ICommandHandler<CrawlerCommand>
     {
         readonly IHttpHandler httpHandler;
-        readonly IArticles articles; 
+        readonly IArticles articles;
 
         public CrawlerCommandHandler(IHttpHandler httpHandler,
             IArticles articles)
@@ -38,96 +44,31 @@ namespace Crawler.Commands
             for (int i = 1; i <= command.Limit; i++)
             {
                 var page = await httpHandler.HandleAsync(i);
-                page = HttpUtility.HtmlDecode(page);
-                
-                var extractedArticles = Extract(page);
-
-                var groupedArticles = extractedArticles.OrderBy(o => o.Date).GroupBy(g => g.Date);
-                foreach(var group in groupedArticles)
-                {
-                    var postDate = group.FirstOrDefault().Date;
-                    if(await articles.AnyWithDate(postDate))
-                        break;
-                    entities.AddRange(group);
-                }
+                var extractedArticles = MorningBrewMapperPage.Map(page);
+                var newArticles = await GetNewArticles(extractedArticles);
+                entities.AddRange(newArticles.Articles);
+                if (!newArticles.HasMore)
+                    break;
             }
             await articles.Add(entities);
         }
 
-        private IEnumerable<Article> Extract(string page)
+        private async Task<NewArticles> GetNewArticles(IEnumerable<Article> entities)
         {
-            var @return = new List<Article>();
-            var doc = new HtmlDocument();
-            doc.LoadHtml(page);
-            List<HtmlNode> posts = ExtractPosts(doc);
-
-            foreach (var post in posts)
+            var @return = new NewArticles() { HasMore = true };
+            var groupedArticles = entities.OrderByDescending(o => o.Date).GroupBy(g => g.Date);
+            foreach (var group in groupedArticles)
             {
-                var postDate = ExtractPostDate(post);
-                var date = ExtractPostDate(postDate);
-
-                List<HtmlNode> links = ExtractLinks(post);
-                foreach (var link in links)
+                var postDate = group.FirstOrDefault().Date;
+                if (await articles.AnyWithDate(postDate))
                 {
-                    IEnumerable<Article> articles = ExtractArticles(link, date);                    
-                    @return.AddRange(articles);
+                    @return.HasMore = false;
+                    break;
                 }
+                @return.Articles.AddRange(group);
             }
 
             return @return;
-        }
-
-        private DateTime ExtractPostDate(string postDate)
-        {
-            var split = postDate.Split(' ');
-            if(split.Count() != 4)
-                throw new ArgumentException($"{postDate} is invalid post date");
-            var day = split[1];
-            day = day.Substring(0,day.Length - 2);
-            var month = EnglishMonths.Map(split[2]);
-            var year = split[3];
-            return new DateTime(int.Parse(year),month,int.Parse(day));
-        }
-
-        private string ExtractPostDate(HtmlNode post)
-        {
-            var p = post.Descendants("p").FirstOrDefault();
-            return HttpUtility.HtmlDecode(p.SelectNodes("em")[1].InnerText);
-        }
-
-        private IEnumerable<Article> ExtractArticles(HtmlNode link, DateTime date)
-        {
-            var tags = link.Descendants("a").ToList();
-            var authors = NormalizeAuthor(link.InnerText);
-
-            var articles = tags.Select(a =>
-                new Article(date,
-                a.Attributes["href"].Value,
-                HttpUtility.HtmlDecode(a.InnerHtml),
-                authors));
-            return articles;
-        }
-
-        private List<HtmlNode> ExtractLinks(HtmlNode post)
-        {
-            return post.Descendants("li").ToList();
-        }            
-
-        private List<HtmlNode> ExtractPosts(HtmlDocument doc)
-        {
-            return doc.DocumentNode
-                            .SelectNodes("//div[@class='post']")
-                            .ToList();
-        }
-
-        private string NormalizeAuthor(string text)
-        {
-            text = text.Trim();
-            var delimeter = " – ";
-            text = text.Substring(text.LastIndexOf(delimeter) + delimeter.Length);
-            var authors = text.Trim();
-
-            return authors;
         }
     }
 }
