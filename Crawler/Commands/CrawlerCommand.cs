@@ -13,14 +13,11 @@ namespace Crawler.Commands
 {
     public class CrawlerCommand : ICommand
     {
-        public CrawlerCommand(int to, int from)
+        public CrawlerCommand(int limit)
         {
-            To = to;
-            From = from;
+            Limit = limit;
         }
-
-        public int To { get; private set; }
-        public int From { get; private set; }
+        public int Limit { get;}
     }
 
     public class CrawlerCommandHandler : ICommandHandler<CrawlerCommand>
@@ -38,11 +35,21 @@ namespace Crawler.Commands
         public async Task HandleAsync(CrawlerCommand command)
         {
             var entities = new List<Article>();
-            for (int i = command.To; i <= command.From; i++)
+            for (int i = 1; i <= command.Limit; i++)
             {
                 var page = await httpHandler.HandleAsync(i);
                 page = HttpUtility.HtmlDecode(page);
-                entities.AddRange(Extract(page));
+                
+                var extractedArticles = Extract(page);
+
+                var groupedArticles = extractedArticles.OrderBy(o => o.Date).GroupBy(g => g.Date);
+                foreach(var group in groupedArticles)
+                {
+                    var postDate = group.FirstOrDefault().Date;
+                    if(await articles.AnyWithDate(postDate))
+                        break;
+                    entities.AddRange(group);
+                }
             }
             await articles.Add(entities);
         }
