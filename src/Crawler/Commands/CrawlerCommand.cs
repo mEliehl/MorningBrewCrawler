@@ -2,10 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Crawler.Entities;
 using Crawler.HttpFactories;
-using HtmlAgilityPack;
 using System.Linq;
-using System;
-using System.Web;
 using Crawler.Mappers;
 using Crawler.Repositories;
 
