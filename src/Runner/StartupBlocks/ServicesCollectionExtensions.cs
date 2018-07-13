@@ -12,11 +12,13 @@ namespace Runner.StartupBlocks
     {
         public static IServiceCollection AddHttpClients(this IServiceCollection services)
         {
-            services.AddHttpClient<IMorningBrewClient, MorningBrewClient>(client =>
+            services
+            .AddTransient<TimingHandler>()
+            .AddHttpClient<IMorningBrewClient, MorningBrewClient>(client =>
             {
                 client.BaseAddress = new Uri("http://blog.cwa.me.uk/");
 
-            });
+            }).AddHttpMessageHandler<TimingHandler>();
             
             return services;
         }

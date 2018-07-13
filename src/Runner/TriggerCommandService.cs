@@ -20,7 +20,7 @@ namespace Runner
         {
             Console.WriteLine($"Starting runner at Utc:{DateTime.UtcNow}");
 
-            _timer = new Timer(DoWork, null, TimeSpan.FromMinutes(1), 
+            _timer = new Timer(DoWork, null, TimeSpan.FromMinutes(0), 
                 TimeSpan.FromDays(1));
 
             return Task.CompletedTask;
