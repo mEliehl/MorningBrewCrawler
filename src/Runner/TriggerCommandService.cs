@@ -18,9 +18,9 @@ namespace Runner
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            Console.WriteLine($"Starting runner at:{DateTime.Now}");
+            Console.WriteLine($"Starting runner at Utc:{DateTime.UtcNow}");
 
-            _timer = new Timer(DoWork, null, TimeSpan.Zero, 
+            _timer = new Timer(DoWork, null, TimeSpan.FromMinutes(1), 
                 TimeSpan.FromDays(1));
 
             return Task.CompletedTask;
@@ -28,14 +28,14 @@ namespace Runner
 
         private void DoWork(object state)
         {
-            Console.WriteLine($"Starting crawler at:{DateTime.Now}");
-            crawlerHandler.HandleAsync(new CrawlerCommand(50)).Wait();
-            Console.WriteLine($"Finished crawler at:{DateTime.Now}");
+            Console.WriteLine($"Starting crawler at Utc:{DateTime.UtcNow}");
+            crawlerHandler.HandleAsync(new CrawlerCommand(2)).Wait();
+            Console.WriteLine($"Finished crawler at Utc:{DateTime.UtcNow}");
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            Console.WriteLine($"Stopped runner at:{DateTime.Now}");
+            Console.WriteLine($"Stopped runner at Utc:{DateTime.UtcNow}");
 
             return Task.CompletedTask;
         }

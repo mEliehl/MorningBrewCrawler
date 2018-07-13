@@ -23,6 +23,7 @@ namespace Runner
                     configHost.SetBasePath(Directory.GetCurrentDirectory());
                     configHost.AddJsonFile("hostsettings.json", optional: true);
                     configHost.AddEnvironmentVariables(prefix: "PREFIX_");
+                    configHost.AddEnvironmentVariables();
                     configHost.AddCommandLine(args);
                 })
                 .ConfigureAppConfiguration((hostContext, configApp) =>
@@ -32,6 +33,7 @@ namespace Runner
                         $"appsettings.{hostContext.HostingEnvironment.EnvironmentName}.json",
                         optional: true);
                     configApp.AddEnvironmentVariables(prefix: "PREFIX_");
+                    configApp.AddEnvironmentVariables();
                     configApp.AddCommandLine(args);
                 })
                 .ConfigureServices((hostContext, services) =>
