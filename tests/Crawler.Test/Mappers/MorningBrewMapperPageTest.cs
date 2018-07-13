@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Crawler.Entities;
 using Crawler.Mappers;
+using Crawler.Test.Mappers.HtmlPages;
 using FluentAssertions;
 using Xunit;
 
@@ -14,8 +15,7 @@ namespace Crawler.Test.Mappers
 
         public MorningBrewPageTest()
         {
-            string filePath = $"{Directory.GetCurrentDirectory()}\\Mappers\\HtmlPages\\morningbrew12072018.html";
-            string page = File.ReadAllText(filePath);
+            string page = ReadTextFromHtml.FromHtmlFile("morningbrew12072018.html");
 
             articles = MorningBrewMapperPage.Map(page);
         }

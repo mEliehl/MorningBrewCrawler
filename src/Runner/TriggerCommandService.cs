@@ -21,7 +21,7 @@ namespace Runner
             Console.WriteLine($"Starting runner at:{DateTime.Now}");
 
             _timer = new Timer(DoWork, null, TimeSpan.Zero, 
-                TimeSpan.FromDays(2));
+                TimeSpan.FromDays(1));
 
             return Task.CompletedTask;
         }
