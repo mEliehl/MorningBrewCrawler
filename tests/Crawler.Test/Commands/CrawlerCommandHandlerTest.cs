@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Crawler.Commands;
 using Crawler.Entities;
-using Crawler.HttpFactories;
+using Crawler.HttpClients;
 using Crawler.Repositories;
 using Crawler.Test.Mappers.HtmlPages;
 using Moq;
@@ -22,8 +22,8 @@ namespace Crawler.Test.Commands
             mockArticles.Setup(s => s.Add(It.IsAny<IEnumerable<Article>>())).Returns(Task.CompletedTask);
             mockArticles.Setup(s => s.AnyWithDate(It.IsAny<DateTime>())).ReturnsAsync(false);
 
-            var mochHttpHandler = new Mock<IHttpHandler>();
-            mochHttpHandler.Setup(s => s.HandleAsync(1)).ReturnsAsync(ReadTextFromHtml.FromHtmlFile("morningbrew06072018.html"));
+            var mochHttpHandler = new Mock<IMorningBrewClient>();
+            mochHttpHandler.Setup(s => s.GetPageAsync(1)).ReturnsAsync(ReadTextFromHtml.FromHtmlFile("morningbrew06072018.html"));
 
             handler = new CrawlerCommandHandler(mochHttpHandler.Object,mockArticles.Object);
         }

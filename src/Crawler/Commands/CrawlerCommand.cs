@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Crawler.Entities;
-using Crawler.HttpFactories;
 using System.Linq;
 using Crawler.Mappers;
 using Crawler.Repositories;
+using Crawler.HttpClients;
 
 namespace Crawler.Commands
 {
@@ -25,13 +25,13 @@ namespace Crawler.Commands
 
     public class CrawlerCommandHandler : ICommandHandler<CrawlerCommand>
     {
-        readonly IHttpHandler httpHandler;
+        readonly IMorningBrewClient morningBrewClient;
         readonly IArticles articles;
 
-        public CrawlerCommandHandler(IHttpHandler httpHandler,
+        public CrawlerCommandHandler(IMorningBrewClient morningBrewClient,
             IArticles articles)
         {
-            this.httpHandler = httpHandler;
+            this.morningBrewClient = morningBrewClient;
             this.articles = articles;
         }
 
@@ -40,7 +40,7 @@ namespace Crawler.Commands
             var entities = new List<Article>();
             for (int i = 1; i <= command.Limit; i++)
             {
-                var page = await httpHandler.HandleAsync(i);
+                var page = await morningBrewClient.GetPageAsync(i);
                 var extractedArticles = MorningBrewMapperPage.Map(page);
                 var newArticles = await GetNewArticles(extractedArticles);
                 entities.AddRange(newArticles.Articles);

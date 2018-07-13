@@ -29,7 +29,7 @@ namespace Runner
         private void DoWork(object state)
         {
             Console.WriteLine($"Starting crawler at Utc:{DateTime.UtcNow}");
-            crawlerHandler.HandleAsync(new CrawlerCommand(2)).Wait();
+            crawlerHandler.HandleAsync(new CrawlerCommand(50)).Wait();
             Console.WriteLine($"Finished crawler at Utc:{DateTime.UtcNow}");
         }
 

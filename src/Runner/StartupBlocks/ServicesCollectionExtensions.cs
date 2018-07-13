@@ -1,5 +1,6 @@
+using System;
 using Crawler.Commands;
-using Crawler.HttpFactories;
+using Crawler.HttpClients;
 using Crawler.Repositories;
 using Crawler.SqlServer;
 using Microsoft.Extensions.Configuration;
@@ -11,7 +12,12 @@ namespace Runner.StartupBlocks
     {
         public static IServiceCollection AddHttpClients(this IServiceCollection services)
         {
-            services.AddSingleton<IHttpHandler, MorningbrewHttpHandler>();
+            services.AddHttpClient<IMorningBrewClient, MorningBrewClient>(client =>
+            {
+                client.BaseAddress = new Uri("http://blog.cwa.me.uk/");
+
+            });
+            
             return services;
         }
 
