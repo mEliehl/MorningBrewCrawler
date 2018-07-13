@@ -5,7 +5,7 @@ using Crawler.Commands;
 using Crawler.Entities;
 using Crawler.HttpClients;
 using Crawler.Repositories;
-using Crawler.Test.Mappers.HtmlPages;
+using Crawler.Test.PageProcessors.HtmlPages;
 using Moq;
 using Xunit;
 

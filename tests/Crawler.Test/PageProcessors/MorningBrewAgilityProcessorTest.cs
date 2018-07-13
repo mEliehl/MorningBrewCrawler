@@ -1,23 +1,21 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using Crawler.Entities;
-using Crawler.Mappers;
-using Crawler.Test.Mappers.HtmlPages;
+using Crawler.PageProcessors;
+using Crawler.Test.PageProcessors.HtmlPages;
 using FluentAssertions;
 using Xunit;
 
-namespace Crawler.Test.Mappers
+namespace Crawler.Test.PageProcessors
 {
-    public class MorningBrewPageTest
+    public class MorningBrewAgilityProcessorTest
     {
         readonly IEnumerable<Article> articles;
-
-        public MorningBrewPageTest()
+        public MorningBrewAgilityProcessorTest()
         {
             string page = ReadTextFromHtml.FromHtmlFile("morningbrew12072018.html");
-
-            articles = MorningBrewMapperPage.Map(page);
+            IMorningBrewProcessor processor = new MorningBrewAgility();
+            articles = processor.Map(page);
         }
 
         [Fact]

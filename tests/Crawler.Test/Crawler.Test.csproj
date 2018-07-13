@@ -20,10 +20,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Mappers\HtmlPages\morningbrew12072018.html">
+    <None Update="PageProcessors\HtmlPages\morningbrew12072018.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Mappers\HtmlPages\morningbrew06072018.html">
+    <None Update="PageProcessors\HtmlPages\morningbrew06072018.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
