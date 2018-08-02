@@ -4,11 +4,11 @@ using Crawler.PageProcessors;
 
 namespace Crawler.Test.PageProcessors
 {
-    public class MorningBrewAgilityProcessorTest : MorningBrewProcessorTest
+    public class MorningBrewRegexTest : MorningBrewProcessorTest
     {
         protected override IEnumerable<Article> GetArticles(string page)
         {
-            IMorningBrewProcessor processor = new MorningBrewAgility();
+            IMorningBrewProcessor processor = new MorningBrewRegex();
             return processor.Map(page);
         }
     }
