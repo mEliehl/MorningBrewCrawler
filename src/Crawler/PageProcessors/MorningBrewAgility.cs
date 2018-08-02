@@ -13,6 +13,7 @@ namespace Crawler.PageProcessors
         public IEnumerable<Article> Map(string page)
         {
             page = HttpUtility.HtmlDecode(page);
+            
             var @return = new List<Article>();
             var doc = new HtmlDocument();
             doc.LoadHtml(page);
@@ -36,8 +37,8 @@ namespace Crawler.PageProcessors
         private List<HtmlNode> ExtractPosts(HtmlDocument doc)
         {
             return doc.DocumentNode
-                            .SelectNodes("//div[@class='post']")
-                            .ToList();
+                .SelectNodes("//div[@class='post']")
+                .ToList();
         }
 
         private DateTime ExtractPostDate(string postDate)
