@@ -17,16 +17,16 @@ namespace Crawler.PageProcessors
             var @return = new List<Article>();
             var doc = new HtmlDocument();
             doc.LoadHtml(page);
-            List<HtmlNode> posts = ExtractPosts(doc);
+            var posts = ExtractPosts(doc);
 
             foreach (var post in posts)
             {
                 var date = ExtractPostDate(post);
 
-                List<HtmlNode> links = ExtractLinks(post);
+                var links = ExtractLinks(post);
                 foreach (var link in links)
                 {
-                    IEnumerable<Article> articles = ExtractArticles(link, date);
+                    var articles = ExtractArticles(link, date);
                     @return.AddRange(articles);
                 }
             }
@@ -34,7 +34,7 @@ namespace Crawler.PageProcessors
             return @return;
         }
 
-        private List<HtmlNode> ExtractPosts(HtmlDocument doc)
+        private IEnumerable<HtmlNode> ExtractPosts(HtmlDocument doc)
         {
             return doc.DocumentNode
                 .SelectNodes("//div[@class='post']")
@@ -59,7 +59,7 @@ namespace Crawler.PageProcessors
             var postDate = HttpUtility.HtmlDecode(node.SelectNodes("em")[1].InnerText);
             return ExtractPostDate(postDate);
         }
-        private List<HtmlNode> ExtractLinks(HtmlNode post)
+        private IEnumerable<HtmlNode> ExtractLinks(HtmlNode post)
         {
             return post.Descendants("li").ToList();
         }
