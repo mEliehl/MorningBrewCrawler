@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using DbUp;
 using Microsoft.Extensions.Configuration;
 
-namespace SqlServer.Migration
+namespace SqlServer.Migration.DbUp
 {
     class Program
     {

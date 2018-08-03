@@ -20,8 +20,8 @@ namespace Runner
         {
             Console.WriteLine($"Starting runner at Utc:{DateTime.UtcNow}");
 
-            _timer = new Timer(DoWork, null, TimeSpan.FromMinutes(0), 
-                TimeSpan.FromDays(1));
+            _timer = new Timer(DoWork, null, dueTime: TimeSpan.FromMinutes(0),
+                period: TimeSpan.FromDays(1));
 
             return Task.CompletedTask;
         }
@@ -29,7 +29,7 @@ namespace Runner
         private void DoWork(object state)
         {
             Console.WriteLine($"Starting crawler at Utc:{DateTime.UtcNow}");
-            crawlerHandler.HandleAsync(new CrawlerCommand(50)).Wait();
+            crawlerHandler.HandleAsync(new CrawlerCommand(10)).Wait();
             Console.WriteLine($"Finished crawler at Utc:{DateTime.UtcNow}");
         }
 

@@ -12,19 +12,19 @@ services:
       ACCEPT_EULA: "Y"
     networks:
       crawler-nw:
-  sqlserver-migration:
+  sqlserver-migration-dbup:
     depends_on:
       - crawler-sqlserver
     build:
       context: .
-      dockerfile: ./src/SqlServer.Migration/Dockerfile
+      dockerfile: ./src/SqlServer.Migration.DbUp/Dockerfile
     environment:
       - ConnectionStrings:default=Data Source=crawler-sqlserver;Initial Catalog=MorningBrew;Persist Security Info=True;User ID=sa;Password=Crawler_Brew
     networks:
       crawler-nw:
   crawler-runner:
     depends_on:
-      - sqlserver-migration
+      - crawler-sqlserver
     build:
       context: .
       dockerfile: ./src/Runner/Dockerfile
