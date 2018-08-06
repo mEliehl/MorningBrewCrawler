@@ -22,6 +22,16 @@ services:
       - ConnectionStrings:default=Data Source=crawler-sqlserver;Initial Catalog=MorningBrew;Persist Security Info=True;User ID=sa;Password=Crawler_Brew
     networks:
       crawler-nw:
+  sqlserver-migration-fluent:
+    depends_on:
+      - crawler-sqlserver
+    build:
+      context: .
+      dockerfile: ./src/SqlServer.Migration.Fluent/Dockerfile
+    environment:
+      - ConnectionStrings:default=Data Source=crawler-sqlserver;Initial Catalog=MorningBrew;Persist Security Info=True;User ID=sa;Password=Crawler_Brew
+    networks:
+      crawler-nw:
   crawler-runner:
     depends_on:
       - crawler-sqlserver
