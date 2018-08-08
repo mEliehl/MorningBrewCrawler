@@ -5,7 +5,7 @@ namespace Crawler.Entities
 {
     public class Author
     {
-        public Author(Guid articleId, string name)
+        internal Author(Guid articleId, string name)
         {
             ArticleId = articleId;
             Name = name;
