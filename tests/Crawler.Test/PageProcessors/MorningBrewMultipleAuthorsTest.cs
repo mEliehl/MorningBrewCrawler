@@ -26,9 +26,13 @@ namespace Crawler.Test.PageProcessors
         }
 
         [Fact]
-        public void CheckAuthors()
+        public void CheckAuthorsNames()
         {
-            article.Authors.Should().Equals("Anthony Cangialosi, Robert Green, Amanda Silver & Kendra Havens");
+            article.Authors.Select(s => s.Name)
+                .Should()
+                .BeEquivalentTo(new string[]{
+                    "Anthony Cangialosi", "Robert Green", "Amanda Silver", "Kendra Havens"
+                });
         }
     }
 }

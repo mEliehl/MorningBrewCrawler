@@ -67,7 +67,8 @@ namespace Crawler.PageProcessors
         private IEnumerable<Article> ExtractArticles(HtmlNode link, DateTime date)
         {
             var tags = link.Descendants("a").ToList();
-            var authors = NormalizeAuthorsNames(link.InnerText);
+            var normalizedAuthorsNames = NormalizeAuthorsNames(link.InnerText);
+            var authors = ExtractAuthorsName(normalizedAuthorsNames);
 
             var articles = tags.Select(a =>
                 new Article(date,
@@ -85,6 +86,13 @@ namespace Crawler.PageProcessors
             var authors = text.Trim();
 
             return authors;
+        }
+
+        private IEnumerable<string> ExtractAuthorsName(string normalizedAuthorsNames)
+        {
+            return normalizedAuthorsNames
+                .Split('&',',')
+                .Select(s => s.Trim());            
         }
     }
 }
