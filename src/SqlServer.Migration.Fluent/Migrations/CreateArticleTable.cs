@@ -11,9 +11,9 @@ namespace SqlServer.Migration.Fluent.Migrations
             Create.Table("Article")
                 .WithColumn("Id").AsGuid().PrimaryKey()
                 .WithColumn("Date").AsDateTime()
-                .WithColumn("Link").AsString()
-                .WithColumn("Title").AsString()
-                .WithColumn("Authors").AsString();
+                .WithColumn("Link").AsString(int.MaxValue)
+                .WithColumn("Title").AsString(int.MaxValue)
+                .WithColumn("Authors").AsString(int.MaxValue);
         }
 
         public override void Down()
