@@ -11,7 +11,10 @@ namespace SqlServer.Migration.Fluent
     class Program
     {
         static void Main(string[] args)
-        {
+        {            
+            foreach(var arg in args)
+                Console.WriteLine($"args={arg}");                            
+            
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
@@ -43,7 +46,7 @@ namespace SqlServer.Migration.Fluent
         private static void UpdateDatabase(IServiceProvider serviceProvider)
         {
             var runner = serviceProvider.GetRequiredService<IMigrationRunner>();
-
+            
             runner.MigrateUp();
         }
     }
