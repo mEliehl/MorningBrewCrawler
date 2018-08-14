@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using DbUp;
+using DocoptNet;
 using FluentMigrator.Runner;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,23 +12,34 @@ namespace SqlServer.Migration.Fluent
     class Program
     {
         static void Main(string[] args)
-        {            
-            foreach(var arg in args)
-                Console.WriteLine($"args={arg}");                            
-            
-            var builder = new ConfigurationBuilder()
+        {
+            MainArgs argument;
+            try
+            {
+                argument = new MainArgs(args);
+                var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddEnvironmentVariables();
 
-            IConfigurationRoot configuration = builder.Build();
+                IConfigurationRoot configuration = builder.Build();
 
-            var serviceProvider = CreateServices(configuration);
+                var serviceProvider = CreateServices(configuration);
 
-            using (var scope = serviceProvider.CreateScope())
+                using (var scope = serviceProvider.CreateScope())
+                {
+                    EnsureDatabase.For.SqlDatabase(configuration.GetConnectionString("default"));
+                    UpdateDatabase(scope.ServiceProvider, argument);
+                }
+            }
+            catch (DocoptExitException ex)
             {
-                EnsureDatabase.For.SqlDatabase(configuration.GetConnectionString("default"));
-                UpdateDatabase(scope.ServiceProvider);
+                Console.WriteLine(ex.Message);
+
+            }
+            catch (DocoptInputErrorException ex)
+            {
+                Console.WriteLine(ex.Message);
             }
         }
 
@@ -43,11 +55,23 @@ namespace SqlServer.Migration.Fluent
                 .BuildServiceProvider(false);
         }
 
-        private static void UpdateDatabase(IServiceProvider serviceProvider)
+        private static void UpdateDatabase(IServiceProvider serviceProvider, MainArgs argument)
         {
             var runner = serviceProvider.GetRequiredService<IMigrationRunner>();
-            
-            runner.MigrateUp();
+
+            if (argument.Rollback.HasValue)
+                runner.Rollback(argument.Rollback.Value);
+
+            if (argument.Down.HasValue)
+                runner.MigrateDown(argument.Down.Value);
+
+            if (argument.Up.HasValue)
+            {
+                if (argument.Up > 0)
+                    runner.MigrateUp(argument.Up.Value);
+                else
+                    runner.MigrateUp();
+            }
         }
     }
 }
