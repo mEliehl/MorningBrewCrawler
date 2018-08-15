@@ -1,4 +1,5 @@
 using System.Data;
+using System.IO;
 using FluentMigrator;
 
 namespace SqlServer.Migration.Fluent.Migrations
@@ -12,7 +13,8 @@ namespace SqlServer.Migration.Fluent.Migrations
                 .WithColumn("ArticleId").AsGuid().ForeignKey("Article","Id").OnDelete(Rule.Cascade)
                 .WithColumn("Name").AsString(int.MaxValue);
             
-            Execute.Script("Scripts\\AddAuthorTableUp.sql");
+            var script = Path.Combine("Scripts","AddAuthorTableUp.sql");
+            Execute.Script(script);
 
             Delete.Column("Authors").FromTable("Article");
         }
@@ -20,7 +22,8 @@ namespace SqlServer.Migration.Fluent.Migrations
         public override void Down()
         {
             Alter.Table("Article").AddColumn("Authors").AsString(int.MaxValue).WithDefaultValue(string.Empty);
-            Execute.Script("Scripts\\AddAuthorTableDown.sql");
+            var script = Path.Combine("Scripts","AddAuthorTableDown.sql");
+            Execute.Script(script);
             Delete.Table("Author");
         }
     }
