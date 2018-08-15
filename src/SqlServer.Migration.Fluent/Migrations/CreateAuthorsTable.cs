@@ -13,7 +13,7 @@ namespace SqlServer.Migration.Fluent.Migrations
                 .WithColumn("ArticleId").AsGuid().ForeignKey("Article","Id").OnDelete(Rule.Cascade)
                 .WithColumn("Name").AsString(int.MaxValue);
             
-            var script = Path.Combine("Scripts","AddAuthorTableUp.sql");
+            var script = Path.Combine("Scripts","CreateAuthorTableUp.sql");
             Execute.Script(script);
 
             Delete.Column("Authors").FromTable("Article");
@@ -22,7 +22,7 @@ namespace SqlServer.Migration.Fluent.Migrations
         public override void Down()
         {
             Alter.Table("Article").AddColumn("Authors").AsString(int.MaxValue).WithDefaultValue(string.Empty);
-            var script = Path.Combine("Scripts","AddAuthorTableDown.sql");
+            var script = Path.Combine("Scripts","CreateAuthorTableDown.sql");
             Execute.Script(script);
             Delete.Table("Author");
         }

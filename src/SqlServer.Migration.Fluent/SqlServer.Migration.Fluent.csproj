@@ -18,10 +18,10 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Scripts\AddAuthorTableUp.sql">
+    <None Update="Scripts\CreateAuthorTableUp.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Scripts\AddAuthorTableDown.sql">
+    <None Update="Scripts\CreateAuthorTableDown.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
