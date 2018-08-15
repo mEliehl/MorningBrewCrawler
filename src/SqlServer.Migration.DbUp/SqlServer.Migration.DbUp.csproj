@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Scripts\Script0001-CreateArticleTable.sql" />  
+    <EmbeddedResource Include="Scripts\Script0002-CreateAuthorTable.sql" />      
   </ItemGroup>
 
   <ItemGroup>
