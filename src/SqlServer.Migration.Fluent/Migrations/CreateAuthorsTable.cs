@@ -1,4 +1,3 @@
-using System.Data;
 using System.IO;
 using FluentMigrator;
 
@@ -8,23 +7,15 @@ namespace SqlServer.Migration.Fluent.Migrations
     public class CreateAuthorsTable : FluentMigrator.Migration
     {
         public override void Up()
-        {
-            Create.Table("Author")
-                .WithColumn("ArticleId").AsGuid().ForeignKey("Article","Id").OnDelete(Rule.Cascade)
-                .WithColumn("Name").AsString(int.MaxValue);
-            
+        {            
             var script = Path.Combine("Scripts","CreateAuthorTableUp.sql");
-            Execute.Script(script);
-
-            Delete.Column("Authors").FromTable("Article");
+            Execute.Script(script);            
         }
 
         public override void Down()
         {
-            Alter.Table("Article").AddColumn("Authors").AsString(int.MaxValue).WithDefaultValue(string.Empty);
             var script = Path.Combine("Scripts","CreateAuthorTableDown.sql");
             Execute.Script(script);
-            Delete.Table("Author");
         }
     }
 }
