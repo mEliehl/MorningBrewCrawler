@@ -4,12 +4,13 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 using Crawler.Entities;
+using System.Linq;
 
 namespace Crawler.SqlServer
 {
     internal class BulkArticles
     {
-        public static async Task Add(IEnumerable<Article> articles, string connectionString )
+        public static async Task Add(IEnumerable<Article> articles, string connectionString)
         {
             using (var connection = new SqlConnection(connectionString))
             {
@@ -19,9 +20,12 @@ namespace Crawler.SqlServer
                     SqlBulkCopy bulk = new SqlBulkCopy(connection, SqlBulkCopyOptions.Default, transcation);
 
                     bulk.DestinationTableName = "Article";
+                    var dtArticles = MakeArticleTable(articles);
+                    await bulk.WriteToServerAsync(dtArticles);
 
-                    var dt = MakeArticleTable(articles);
-                    await bulk.WriteToServerAsync(dt);
+                    bulk.DestinationTableName = "Author";
+                    var dtAuthors = MakeAuthorTable(articles.SelectMany(s => s.Authors));
+                    await bulk.WriteToServerAsync(dtAuthors);
 
                     transcation.Commit();
                 }
@@ -35,11 +39,9 @@ namespace Crawler.SqlServer
             dt.Columns.Add("Date", typeof(DateTime));
             dt.Columns.Add("Link", typeof(string));
             dt.Columns.Add("Title", typeof(string));
-            dt.Columns.Add("Authors", typeof(string));
             foreach (var article in articles)
-            {
                 dt.Rows.Add(MakeArticleRow(article));
-            }
+
             return dt;
         }
 
@@ -49,8 +51,26 @@ namespace Crawler.SqlServer
                 article.Id,
                 article.Date,
                 article.Link,
-                article.Title,
-                article.Authors
+                article.Title
+            };
+        }
+
+        private static DataTable MakeAuthorTable(IEnumerable<Author> authors)
+        {
+            var dt = new DataTable("Author");
+            dt.Columns.Add("ArticleId", typeof(Guid));
+            dt.Columns.Add("Name", typeof(string));
+            foreach (var author in authors)
+                dt.Rows.Add(MakeAuthorRow(author));
+
+            return dt;
+        }
+
+        private static object[] MakeAuthorRow(Author author)
+        {
+            return new object[]{
+                author.ArticleId,
+                author.Name
             };
         }
     }
