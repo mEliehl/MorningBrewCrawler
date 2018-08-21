@@ -48,9 +48,10 @@ Task("Test")
     });
 
 Task("Default")
+    .IsDependentOn("Test")
   .Does(() =>
 {
-  Information("Hello World!");    
+     
 });
 
 RunTarget(target);
