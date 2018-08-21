@@ -1,0 +1,9 @@
+resources:
+- repo: self
+queue:
+  name: Hosted
+  condition: succeeded()
+steps:
+- task: cake-build.cake.cake-build-task.Cake@0
+  displayName: Cake 
+
