@@ -1,13 +1,13 @@
 # Build ASP.NET Core project using VSTS
 # https://docs.microsoft.com/vsts/pipelines/languages/dotnet-core?view=vsts
 
-queue: 'Hosted'
+queue: 'Hosted Linux Preview'
 
 steps:
 - task: DotNetCoreInstaller@0
   displayName: Use .NET Core sdk 2.1.400
   inputs:
     version: 2.1.400
-    
+
 - powershell: .\build.ps1 
   displayName: PowerShell Cake Script
