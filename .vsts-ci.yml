@@ -2,7 +2,7 @@ resources:
 - repo: self
 queue:
   name: Hosted
-  condition: succeeded()
+  
 steps:
 - powershell: . build.ps1 
   displayName: PowerShell Script
