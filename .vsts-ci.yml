@@ -1,10 +1,8 @@
 # Build ASP.NET Core project using VSTS
 # https://docs.microsoft.com/vsts/pipelines/languages/dotnet-core?view=vsts
 
-queue: 'Hosted'
-variables:
-  buildConfiguration: 'Release'
+queue: 'Hosted Linux Preview'
 
 steps:
-- task: cake-build.cake.cake-build-task.Cake@0
-  displayName: Cake
+- powershell: . build.ps1 
+  displayName: PowerShell Cake Script
