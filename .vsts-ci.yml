@@ -1,7 +1,7 @@
 # Build ASP.NET Core project using VSTS
 # https://docs.microsoft.com/vsts/pipelines/languages/dotnet-core?view=vsts
 
-queue: 'Hosted Linux Preview'
+queue: 'Hosted'
 
 steps:
 - powershell: . build.ps1 
