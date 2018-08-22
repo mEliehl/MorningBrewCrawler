@@ -1,8 +1,8 @@
-# Build ASP.NET Core project using VSTS
-# https://docs.microsoft.com/vsts/pipelines/languages/dotnet-core?view=vsts
-
-queue: 'Hosted'
-
+resources:
+- repo: self
+queue:
+  name: Hosted
+  condition: succeeded()
 steps:
 - powershell: . build.ps1 
-  displayName: PowerShell Cake Script
+  displayName: PowerShell Script
