@@ -1,0 +1,1 @@
+Builda Status on Linux - [![Build status](https://meliehl.visualstudio.com/MorningBrewCrawler/_apis/build/status/MorningBrewCrawler%20CI?branch=master)](https://meliehl.visualstudio.com/MorningBrewCrawler/_build/latest?definitionId=39&branch=master)
