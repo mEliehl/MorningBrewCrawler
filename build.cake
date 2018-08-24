@@ -64,9 +64,9 @@ Task("Publish-Test")
             TFBuild.Commands.PublishCodeCoverage(new TFBuildPublishCodeCoverageData()
             {
                 SummaryFileLocation = testArtifact.ToString() + "/coverage.cobertura.xml",
-                CodeCoverageTool = TFCodeCoverageToolType.JaCoCo
+                CodeCoverageTool = TFCodeCoverageToolType.Cobertura
             });
-            
+
             TFBuild.Commands.UploadArtifact("./",testArtifact.ToString() + "/coverage.cobertura.xml", "coverage");
         }
         else
