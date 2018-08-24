@@ -70,16 +70,6 @@ Task("Publish-Test")
                  , ReportGeneratorReportType.Badges
                  }
         });
-
-        if(TFBuild.IsRunningOnVSTS && IsRunningOnWindows())
-        {
-            TFBuild.Commands.PublishCodeCoverage(new TFBuildPublishCodeCoverageData()
-            {
-                SummaryFileLocation = file.FullPath,
-                CodeCoverageTool = TFCodeCoverageToolType.Cobertura,
-                ReportDirectory = report.FullPath
-            });
-        }
     });
 
 Task("Default")
