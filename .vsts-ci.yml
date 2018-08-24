@@ -11,3 +11,10 @@ steps:
 
 - bash: . build.sh 
   displayName: Bash Cake Script
+  
+- task: PublishCodeCoverageResults@1
+  displayName: Publish code coverage from coverage.cobertura.xml
+  inputs:
+    codeCoverageTool: Cobertura
+    summaryFileLocation: '$(build.SourceDirectory)/tests/Artifacts/coverage.cobertura.xml'
+    reportDirectory: '$(build.artifactstagingdirectory)/tests/Report'
