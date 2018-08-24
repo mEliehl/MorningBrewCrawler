@@ -60,7 +60,15 @@ Task("Publish-Test")
     .Does(() =>
     {
         if(TFBuild.IsRunningOnVSTS)
+        {
+            TFBuild.Commands.PublishCodeCoverage(new TFBuildPublishCodeCoverageData()
+            {
+                SummaryFileLocation = testArtifact.ToString() + "/coverage.cobertura.xml",
+                CodeCoverageTool = TFCodeCoverageToolType.JaCoCo
+            });
+            
             TFBuild.Commands.UploadArtifact("./",testArtifact.ToString() + "/coverage.cobertura.xml", "coverage");
+        }
         else
             ReportGenerator(testArtifact.ToString() + "/coverage.cobertura.xml", testArtifact.ToString() + "/coverage");
     });
