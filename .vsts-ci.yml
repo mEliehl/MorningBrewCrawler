@@ -16,5 +16,5 @@ steps:
   displayName: Publish code coverage from coverage.cobertura.xml
   inputs:
     codeCoverageTool: Cobertura
-    summaryFileLocation: '$(build.SourceDirectory)/tests/Artifacts/coverage.cobertura.xml'
-    reportDirectory: '$(build.artifactstagingdirectory)/tests/Report'
+    summaryFileLocation: '$(build.SourcesDirectory)/tests/Artifacts/coverage.cobertura.xml'
+    reportDirectory: '$(build.SourcesDirectory)/tests/Artifacts/Report'

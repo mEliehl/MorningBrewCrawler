@@ -65,7 +65,10 @@ Task("Publish-Test")
 
         ReportGenerator(file, report, new ReportGeneratorSettings()
         {
-            ReportTypes = new [] {ReportGeneratorReportType.HtmlSummary}
+            ReportTypes = new [] {ReportGeneratorReportType.HtmlSummary
+                 , ReportGeneratorReportType.Html
+                 , ReportGeneratorReportType.Badges
+                 }
         });
 
         if(TFBuild.IsRunningOnVSTS && IsRunningOnWindows())
