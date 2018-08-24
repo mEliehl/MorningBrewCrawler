@@ -11,6 +11,16 @@ steps:
 
 - bash: . build.sh 
   displayName: Bash Cake Script
+
+  
+- powershell: 'ls -directory' 
+  displayName: PowerShell Script ls
+
+- powershell: 'cd $(build.artifactstagingdirectory)' 
+  displayName: PowerShell Script ls
+
+- powershell: 'ls -directory' 
+  displayName: PowerShell Script ls
   
 - task: PublishCodeCoverageResults@1
   displayName: Publish code coverage from coverage.cobertura.xml
