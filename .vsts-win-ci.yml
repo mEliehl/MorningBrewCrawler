@@ -9,5 +9,5 @@ steps:
   inputs:
     version: 2.1.401
 
-- powershell: . build.ps1 
+- powershell: .\build.ps1 
   displayName: PowerShell Cake Script
