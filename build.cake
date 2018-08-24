@@ -62,6 +62,9 @@ Task("Publish-Test")
     {
         var file = testArtifact.Path.GetFilePath("coverage.cobertura.xml");
         var report = testArtifact.Path.Combine("Report");
+
+        ReportGenerator(file, report);
+        
         if(TFBuild.IsRunningOnVSTS)
         {
             TFBuild.Commands.PublishCodeCoverage(new TFBuildPublishCodeCoverageData()
@@ -71,8 +74,6 @@ Task("Publish-Test")
                 ReportDirectory = report.ToString()
             });
         }
-        else
-            ReportGenerator(file, report);
     });
 
 Task("Default")
