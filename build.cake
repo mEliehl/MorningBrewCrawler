@@ -5,7 +5,8 @@ var configuration = Argument("configuration", "Release");
 var testArtifact = Directory("./tests") + Directory("Artifacts");
 
 Task("Clean")
-    .Does(() =>{        
+    .Does(() =>{       
+        CleanDirectory(testArtifact) ;
         DotNetCoreClean("./", new DotNetCoreCleanSettings()
         {
             Configuration = configuration,
@@ -59,18 +60,19 @@ Task("Publish-Test")
     .IsDependentOn("Test")
     .Does(() =>
     {
+        var file = testArtifact.Path.GetFilePath("coverage.cobertura.xml");
+        var report = testArtifact.Path.Combine("Report");
         if(TFBuild.IsRunningOnVSTS)
         {
             TFBuild.Commands.PublishCodeCoverage(new TFBuildPublishCodeCoverageData()
             {
-                SummaryFileLocation = testArtifact.ToString() + "/coverage.cobertura.xml",
-                CodeCoverageTool = TFCodeCoverageToolType.Cobertura
+                SummaryFileLocation = file.ToString(),
+                CodeCoverageTool = TFCodeCoverageToolType.Cobertura,
+                ReportDirectory = report.ToString()
             });
-
-            TFBuild.Commands.UploadArtifact("./",testArtifact.ToString() + "/coverage.cobertura.xml", "coverage");
         }
         else
-            ReportGenerator(testArtifact.ToString() + "/coverage.cobertura.xml", testArtifact.ToString() + "/coverage");
+            ReportGenerator(file, report);
     });
 
 Task("Default")
