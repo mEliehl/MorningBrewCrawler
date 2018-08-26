@@ -48,6 +48,8 @@ Task("Test")
                     NoBuild = true,
                     NoRestore = true,
                     Verbosity = DotNetCoreVerbosity.Minimal,
+                    Logger = "trx",
+                    ResultsDirectory = testArtifact,
                     ArgumentCustomization = args => args
                         .Append("/p:CollectCoverage=true")
                         .Append("/p:CoverletOutputFormat=cobertura")

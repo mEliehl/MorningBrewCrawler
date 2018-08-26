@@ -56,7 +56,7 @@ namespace Crawler.Test.PageProcessors
 
         [Theory]
         [InlineData("http://mattwarren.org/2018/07/05/.NET-JIT-and-CLR-Joined-at-the-Hip/")]
-        [InlineData("https://ayende.com/blog/183649-A/slides-from-todays-talk")]
+        [InlineData("https://ayende.com/blog/183649-A/slides-from-todays-talks")]
         public void CheckContainLinks(string link)
             => articles.Should().Contain(p => p.Link == link);
     }

@@ -12,6 +12,15 @@ steps:
 - powershell: .\build.ps1 
   displayName: PowerShell Cake Script
 
+- task: PublishTestResults@2
+  displayName: Publish Test Results
+  inputs:
+    testRunner: VSTest
+    testResultsFiles: '*.trx'
+    searchFolder: '$(build.SourcesDirectory)/tests/Artifacts'
+  continueOnError: true
+  condition: succeededOrFailed()
+
 - task: PublishCodeCoverageResults@1
   displayName: Publish code coverage from coverage.cobertura.xml
   inputs:
