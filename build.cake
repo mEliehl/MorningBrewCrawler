@@ -66,11 +66,9 @@ Task("Publish-Test")
         var report = testArtifact.Path.Combine("Report");
 
         ReportGenerator(file, report, new ReportGeneratorSettings()
-        {
-            ReportTypes = new [] {ReportGeneratorReportType.HtmlSummary
-                 , ReportGeneratorReportType.Html
-                 , ReportGeneratorReportType.Badges
-                 }
+        {            
+            ArgumentCustomization = args => args
+                .Append("-reportTypes:htmlInline")                        
         });
     });
 
