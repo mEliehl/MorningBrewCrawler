@@ -43,9 +43,7 @@ namespace Crawler.PageProcessors
 
         private DateTime ExtractPostDate(string postDate)
         {
-            var split = postDate.Split(' ');
-            if (split.Count() != 4)
-                throw new ArgumentException($"{postDate} is invalid post date");
+            var split = postDate.Split(' ');            
             var day = split[1];
             day = day.Substring(0, day.Length - 2);
             var month = EnglishMonths.Map(split[2]);
