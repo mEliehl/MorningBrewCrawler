@@ -19,7 +19,7 @@ namespace Crawler.Test.PageProcessors
             articles = GetArticles(page);
         }
 
-        public IEnumerable<Article> GetArticles(string page)
+        private IEnumerable<Article> GetArticles(string page)
         {
             IMorningBrewProcessor processor = new MorningBrewAgility();
             return processor.Map(page);

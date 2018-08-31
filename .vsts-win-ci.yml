@@ -9,8 +9,11 @@ steps:
   inputs:
     version: 2.1.401
 
-- powershell: .\build.ps1 
+- powershell: .\build.ps1
   displayName: PowerShell Cake Script
+
+- powershell: .\build.ps1 -target=Publish-Test
+  displayName: PowerShell Cake Publish-Test Script
 
 - task: PublishTestResults@2
   displayName: Publish Test Results
@@ -25,5 +28,5 @@ steps:
   displayName: Publish code coverage from coverage.cobertura.xml
   inputs:
     codeCoverageTool: Cobertura
-    summaryFileLocation: '$(build.SourcesDirectory)/tests/Artifacts/coverage.cobertura.xml'
+    summaryFileLocation: '$(build.SourcesDirectory)/tests/Artifacts/**/coverage.cobertura.xml'
     reportDirectory: '$(build.SourcesDirectory)/tests/Artifacts/Report'

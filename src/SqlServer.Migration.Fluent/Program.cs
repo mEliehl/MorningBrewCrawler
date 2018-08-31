@@ -15,20 +15,19 @@ namespace SqlServer.Migration.Fluent
         {
             MainArgs argument;
             try
-            {
+            {                
                 argument = new MainArgs(args);
                 var builder = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
+                .SetBasePath(Path.Combine(AppContext.BaseDirectory))
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddEnvironmentVariables();
 
                 IConfigurationRoot configuration = builder.Build();
 
-                var serviceProvider = CreateServices(configuration);
-
+                var serviceProvider = CreateServices(configuration);                
                 using (var scope = serviceProvider.CreateScope())
                 {
-                    EnsureDatabase.For.SqlDatabase(configuration.GetConnectionString("default"));
+                    EnsureDatabase.For.SqlDatabase(configuration.GetConnectionString("default"));                    
                     UpdateDatabase(scope.ServiceProvider, argument);
                 }
             }

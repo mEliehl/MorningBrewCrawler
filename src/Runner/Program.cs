@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,7 +16,7 @@ namespace Runner
             var host = new HostBuilder()
                 .ConfigureHostConfiguration(configHost =>
                 {
-                    configHost.SetBasePath(Directory.GetCurrentDirectory());
+                    configHost.SetBasePath(Path.Combine(AppContext.BaseDirectory));
                     configHost.AddJsonFile("hostsettings.json", optional: true);
                     configHost.AddEnvironmentVariables(prefix: "PREFIX_");
                     configHost.AddEnvironmentVariables();

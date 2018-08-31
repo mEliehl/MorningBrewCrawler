@@ -1,0 +1,1 @@
+.\build.ps1 -target=default; .\build.ps1 -target=Integration-Test; .\build.ps1 -target=Publish-Test

@@ -26,7 +26,7 @@ namespace Crawler.SqlServer
         {
             using (var connection = new SqlConnection(settings.ConnectionString))
             {
-                return await connection.QueryFirstOrDefaultAsync<bool>("select count(1) from Article where date=@date",
+                return await connection.QueryFirstOrDefaultAsync<bool>("select 1 from Article where date=@date",
                 new
                 {
                     date
