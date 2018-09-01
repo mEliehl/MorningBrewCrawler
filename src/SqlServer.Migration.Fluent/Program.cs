@@ -29,7 +29,7 @@ namespace SqlServer.Migration.Fluent
                 {
                     EnsureDatabase.For.SqlDatabase(configuration.GetConnectionString("default"));                    
                     System.Console.WriteLine("criado!!");
-                    //UpdateDatabase(scope.ServiceProvider, argument);
+                    UpdateDatabase(scope.ServiceProvider, argument);
                 }
             }
             catch (DocoptExitException ex)

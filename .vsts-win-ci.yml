@@ -18,7 +18,7 @@ steps:
 - powershell: .\build.ps1 -target=Integration-Test
   displayName: PowerShell Cake Integration-Test Script
   env:
-    ConnectionStrings:default: Data Source=(LocalDb)\mssqllocaldb;Initial Catalog=MorningBrew;Integrated Security=SSPI;AttachDBFilename=.\MorningBrew.mdf
+    ConnectionStrings:default: Data Source=(LocalDb)\mssqllocaldb;Initial Catalog=MorningBrew;Integrated Security=SSPI
 
 - powershell: .\build.ps1 -target=Publish-Test
   displayName: PowerShell Cake Publish-Test Script
