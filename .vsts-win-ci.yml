@@ -13,7 +13,7 @@ steps:
   displayName: PowerShell Cake Script
 
 - powershell: 'sqllocaldb start mssqllocaldb.' 
-  displayName: 'PowerShell Script'
+  displayName: 'PowerShell Start LocalDB Script'
 
 - powershell: .\build.ps1 -target=Integration-Test
   displayName: PowerShell Cake Integration-Test Script
