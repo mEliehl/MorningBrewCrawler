@@ -12,6 +12,16 @@ steps:
 - powershell: .\build.ps1
   displayName: PowerShell Cake Script
 
+- powershell: 'sqllocaldb start mssqllocaldb.' 
+  displayName: 'PowerShell Script'
+  env:
+    Connextion: Sasasasasa
+
+  - powershell: .\build.ps1 -target=Integration-Test
+    displayName: PowerShell Cake Integration-Test Script
+    env:
+      ConnectionStrings:default: Data Source=(LocalDb)\MSSQLLocalDB;Initial Catalog=MorningBrew;Integrated Security=SSPI;AttachDBFilename=.\MorningBrew.mdf
+
 - powershell: .\build.ps1 -target=Publish-Test
   displayName: PowerShell Cake Publish-Test Script
 
