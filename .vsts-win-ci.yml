@@ -1,7 +1,7 @@
 # Build ASP.NET Core project using VSTS
 # https://docs.microsoft.com/vsts/pipelines/languages/dotnet-core?view=vsts
 
-queue: 'Hosted'
+queue: 'Hosted VS2017'
 
 steps:
 - task: DotNetCoreInstaller@0

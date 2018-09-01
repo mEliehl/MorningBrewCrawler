@@ -1,7 +1,7 @@
 # Build ASP.NET Core project using VSTS
 # https://docs.microsoft.com/vsts/pipelines/languages/dotnet-core?view=vsts
 
-queue: 'Hosted Ubuntu 1604'
+queue: 'Hosted Linux Preview'
 
 steps:
 - task: DotNetCoreInstaller@0
@@ -11,6 +11,18 @@ steps:
 
 - bash: . build.sh
   displayName: Bash Cake Script
+
+- task: DockerCompose@0
+  displayName: 'Run a Docker Compose command'
+  inputs:
+    containerregistrytype: 'Container Registry'
+
+    dockerRegistryEndpoint: meliehl
+
+    dockerComposeCommand: 'up -d crawler-sqlserver'
+
+- bash: . build.sh -target=Integration-Test
+  displayName: Bash Cake Publish-Test Script
 
 - bash: . build.sh -target=Publish-Test
   displayName: Bash Cake Publish-Test Script
