@@ -28,7 +28,8 @@ namespace SqlServer.Migration.Fluent
                 using (var scope = serviceProvider.CreateScope())
                 {
                     EnsureDatabase.For.SqlDatabase(configuration.GetConnectionString("default"));                    
-                    UpdateDatabase(scope.ServiceProvider, argument);
+                    System.Console.WriteLine("criado!!");
+                    //UpdateDatabase(scope.ServiceProvider, argument);
                 }
             }
             catch (DocoptExitException ex)
@@ -47,7 +48,7 @@ namespace SqlServer.Migration.Fluent
             return new ServiceCollection()
                 .AddFluentMigratorCore()
                 .ConfigureRunner(rb => rb
-                    .AddSqlServer()
+                    .AddSqlServer()                    
                     .WithGlobalConnectionString(configuration.GetConnectionString("default"))
                     .ScanIn(typeof(CreateArticleTable).Assembly).For.Migrations())
                 .AddLogging(lb => lb.AddFluentMigratorConsole())
