@@ -11,12 +11,12 @@ CREATE TABLE #CommaDelimiter
 )
 
 Insert Into #CommaDelimiter
-select Id ,TRIM(value) as Authors
+select Id ,REPLACE(value,' ','') as Authors
 from Article
 CROSS APPLY string_split(Authors,',')
 
 insert into Author
-select Id as ArticleId, TRIM(value) as Name
+select Id as ArticleId, REPLACE(value,' ','') as Name
 from #CommaDelimiter
 CROSS APPLY string_split(Authors,'&');
 
