@@ -15,7 +15,6 @@ Task("Clean")
     });
 
 Task("Restore")
-    .IsDependentOn("Clean")
     .Does(() =>{
         DotNetCoreRestore("./",new DotNetCoreRestoreSettings()
         {            
@@ -23,8 +22,7 @@ Task("Restore")
         });
     });
 
-Task("Build")
-    .IsDependentOn("Restore")
+Task("Build")    
     .Does(() =>{
         DotNetCoreBuild("./",new DotNetCoreBuildSettings()
         {
@@ -34,8 +32,7 @@ Task("Build")
         });
     });
 
-Task("Test")
-    .IsDependentOn("Build")
+Task("Test")    
     .Does(() =>{
         var output = MakeAbsolute(testArtifact).ToString() + "/Unit";
         foreach(var project in GetFiles("./tests/**/*.csproj"))
@@ -72,8 +69,7 @@ Task("Database-Migration")
         });
     });
 
-Task("Integration-Test")  
-    .IsDependentOn("Database-Migration")
+Task("Integration-Test")      
     .Does(() =>{
         var output = MakeAbsolute(testArtifact).ToString() + "/Integration";
         foreach(var project in GetFiles("./tests/**/*.csproj"))
@@ -111,11 +107,19 @@ Task("Publish-Test")
         });
     });
 
+Task("BuildAndUnitTest")
+    .IsDependentOn("Clean")
+    .IsDependentOn("Restore")
+    .IsDependentOn("Build")
+    .IsDependentOn("Test");
+
+Task("MigrationAndIntegrationTest")
+    .IsDependentOn("Database-Migration")
+    .IsDependentOn("Integration-Test");
+
 Task("Default")
-    .IsDependentOn("Test")
-  .Does(() =>
-{
-     
-});
+    .IsDependentOn("BuildAndUnitTest")
+    .IsDependentOn("MigrationAndIntegrationTest")
+    .IsDependentOn("Publish-Test");
 
 RunTarget(target);

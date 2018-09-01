@@ -9,13 +9,13 @@ steps:
   inputs:
     version: 2.1.401
 
-- powershell: .\build.ps1
+- powershell: .\build.ps1 -Target=BuildAndUnitTest
   displayName: PowerShell Cake Script
 
 - powershell: 'sqllocaldb start mssqllocaldb.' 
   displayName: 'PowerShell Start LocalDB Script'
 
-- powershell: .\build.ps1 -target=Integration-Test
+- powershell: .\build.ps1 -target=MigrationAndIntegrationTest
   displayName: PowerShell Cake Integration-Test Script
   env:
     ConnectionStrings:default: Data Source=(LocalDb)\mssqllocaldb;Initial Catalog=MorningBrew;Integrated Security=SSPI

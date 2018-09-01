@@ -9,22 +9,8 @@ steps:
   inputs:
     version: 2.1.401
 
-- bash: . build.sh
+- bash: . build.sh -target=BuildAndUnitTest
   displayName: Bash Cake Script
-
-# - task: DockerCompose@0
-#   displayName: 'Run a Docker Compose command'
-#   inputs:
-#     containerregistrytype: 'Container Registry'
-
-#     dockerRegistryEndpoint: meliehl
-
-#     dockerComposeCommand: 'up -d crawler-sqlserver'
-
-# - bash: . build.sh -target=Integration-Test
-#   displayName: Bash Cake Integration-Test Script
-#   env:
-#     ConnectionStrings:default: Data Source=0.0.0.0;Initial Catalog=MorningBrew;Persist Security Info=True;User ID=sa;Password=Crawler_Brew
 
 - bash: . build.sh -target=Publish-Test
   displayName: Bash Cake Publish-Test Script
