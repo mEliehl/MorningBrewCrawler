@@ -34,9 +34,11 @@ Task("Build")
 
 Task("Test")    
     .Does(() =>{
-        var output = MakeAbsolute(testArtifact).ToString() + "/Unit";
+        var output = MakeAbsolute(testArtifact).ToString();
+
         foreach(var project in GetFiles("./tests/**/*.csproj"))
         {
+            //2%c is equal (,)
             DotNetCoreTest(
                 project.GetDirectory().FullPath,
                 new DotNetCoreTestSettings()
@@ -50,7 +52,7 @@ Task("Test")
                     Filter = "Category=Unit",
                     ArgumentCustomization = args => args
                         .Append("/p:CollectCoverage=true")
-                        .Append("/p:CoverletOutputFormat=cobertura")
+                        .Append("/p:CoverletOutputFormat=json%2ccobertura")
                         .Append($"/p:CoverletOutput=\"{output}/\""),
                 });
         }
@@ -71,7 +73,7 @@ Task("Database-Migration")
 
 Task("Integration-Test")      
     .Does(() =>{
-        var output = MakeAbsolute(testArtifact).ToString() + "/Integration";
+        var output = MakeAbsolute(testArtifact).ToString();
         foreach(var project in GetFiles("./tests/**/*.csproj"))
         {
             DotNetCoreTest(
@@ -87,7 +89,8 @@ Task("Integration-Test")
                     Filter = "Category=Integration",
                     ArgumentCustomization = args => args
                         .Append("/p:CollectCoverage=true")
-                        .Append("/p:CoverletOutputFormat=cobertura")
+                        .Append("/p:CoverletOutputFormat=json%2ccobertura")                     
+                        .Append($"/p:MergeWith=\"{output}/coverage.json\"")
                         .Append($"/p:CoverletOutput=\"{output}/\""),
                 });
         }
@@ -96,10 +99,8 @@ Task("Integration-Test")
 Task("Publish-Test")   
     .Does(() =>
     {
-        var file = testArtifact.Path.GetFilePath("coverage.cobertura.xml");
         var report = testArtifact.Path.Combine("Report");
-        var files = GetFiles($"{testArtifact.Path}/**/*.cobertura.xml");
-
+        var files = GetFiles($"{testArtifact.Path}/*.cobertura.xml");        
         ReportGenerator(files, report, new ReportGeneratorSettings()
         {            
             ArgumentCustomization = args => args
