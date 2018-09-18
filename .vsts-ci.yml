@@ -12,16 +12,28 @@ steps:
 - bash: . build.sh -target=BuildAndUnitTest
   displayName: Bash Cake Script
 
+- task: Docker@1
+  displayName: 'Run sql server image'
+  inputs:
+    containerregistrytype: 'Container Registry'
+    command: 'Run an image'
+    imageName: 'microsoft/mssql-server-linux'
+    containerName: sqlserver
+    ports: '1433:1433'
+    envVars: |
+     ACCEPT_EULA=Y
+     SA_PASSWORD=Crawler_Brew
+    restartPolicy: always
+
 - bash: |
-   docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=Crawler_Brew' \
-      -p 1433:1433 \
-      -d microsoft/mssql-server-linux:2017-latest 
-  displayName: 'Start SqlServer'
+   IP=`docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' sqlserver`
+   echo "##vso[task.setvariable variable=SqlServer:Host;]$IP" 
+  displayName: 'Get docker sqlserver Ip'
 
 - bash: . build.sh -target=MigrationAndIntegrationTest
   displayName: Bash Cake Integration-Test Script
   env:
-    ConnectionStrings:default: Data Source=localhost;Initial Catalog=MorningBrew;Persist Security Info=True;User ID=sa;Password=Crawler_Brew
+    ConnectionStrings:default: Data Source=$(SqlServer:Host);Initial Catalog=MorningBrew;Persist Security Info=True;User ID=sa;Password=Crawler_Brew
 
 - bash: . build.sh -target=Publish-Test
   displayName: Bash Cake Publish-Test Script
