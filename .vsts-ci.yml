@@ -12,6 +12,17 @@ steps:
 - bash: . build.sh -target=BuildAndUnitTest
   displayName: Bash Cake Script
 
+- bash: |
+   docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=Crawler_Brew' \
+      -p 1433:1433 \
+      -d microsoft/mssql-server-linux:2017-latest 
+  displayName: 'Start SqlServer'
+
+- bash: .\build.sh -target=MigrationAndIntegrationTest
+  displayName: Bash Cake Integration-Test Script
+  env:
+    ConnectionStrings:default: Data Source=localhost;Initial Catalog=MorningBrew;Persist Security Info=True;User ID=sa;Password=Crawler_Brew
+
 - bash: . build.sh -target=Publish-Test
   displayName: Bash Cake Publish-Test Script
 
