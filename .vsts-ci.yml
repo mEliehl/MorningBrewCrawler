@@ -18,7 +18,7 @@ steps:
       -d microsoft/mssql-server-linux:2017-latest 
   displayName: 'Start SqlServer'
 
-- bash: .\build.sh -target=MigrationAndIntegrationTest
+- bash: . build.sh -target=MigrationAndIntegrationTest
   displayName: Bash Cake Integration-Test Script
   env:
     ConnectionStrings:default: Data Source=localhost;Initial Catalog=MorningBrew;Persist Security Info=True;User ID=sa;Password=Crawler_Brew
