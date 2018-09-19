@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Polly;
 using Polly.Extensions.Http;
 using Polly.Timeout;
+using Runner.HostedServices;
 
 namespace Runner.StartupBlocks
 {
@@ -60,6 +61,15 @@ namespace Runner.StartupBlocks
         public static IServiceCollection AddHostedServices(this IServiceCollection services)
         {
             services.AddHostedService<TriggerCommandService>();
+            return services;
+        }
+
+        public static IServiceCollection AddSettings(this IServiceCollection services
+            , IConfiguration configuration)
+        {
+            var triggerOptions = configuration.GetSection("TriggerOptions").Get<TriggerOptions>();
+            services.AddSingleton(triggerOptions);
+
             return services;
         }
     }

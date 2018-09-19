@@ -10,11 +10,11 @@ namespace Crawler.Commands
 {
     public class CrawlerCommand : ICommand
     {
-        public CrawlerCommand(int limit)
+        public CrawlerCommand(uint pageLimit)
         {
-            Limit = limit;
+            this.pageLimit = pageLimit;
         }
-        public int Limit { get; }
+        public uint pageLimit { get; }
     }
 
     class NewArticles
@@ -38,7 +38,7 @@ namespace Crawler.Commands
         public async Task HandleAsync(CrawlerCommand command)
         {
             var entities = new List<Article>();
-            for (int i = 1; i <= command.Limit; i++)
+            for (int i = 1; i <= command.pageLimit; i++)
             {
                 var page = await morningBrewClient.GetPageAsync(i);
                 var extractedArticles = MorningBrewMapperPage.Map(page);

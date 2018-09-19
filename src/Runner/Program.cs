@@ -40,7 +40,8 @@ namespace Runner
                         .AddHttpClients()
                         .AddRepositories(hostContext.Configuration)
                         .AddCommanHandlers()
-                        .AddHostedServices();
+                        .AddHostedServices()
+                        .AddSettings(hostContext.Configuration);
 
                 })
                 .ConfigureLogging((hostContext, configLogging) =>
