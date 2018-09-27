@@ -39,18 +39,18 @@ namespace Hangfire.Runner
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
-            {
                 app.UseDeveloperExceptionPage();
-            }
             else
-            {
                 app.UseHsts();
-            }
 
-            app.UseHttpsRedirection();
-            app.UseHangfireServer();
-            app.UseHangfireDashboard();
-            app.UseMvc();
+            app
+                .UseHttpsRedirection()
+                .UseHangfireServer()
+                .UseHangfireDashboard("/hangfire", new DashboardOptions()
+                {
+                    Authorization = new[] { new DashboardFilter() }
+                })
+                .UseMvc();
         }
     }
 }

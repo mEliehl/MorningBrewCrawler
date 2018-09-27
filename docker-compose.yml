@@ -42,6 +42,19 @@ services:
       - ConnectionStrings:default=Data Source=crawler-sqlserver;Initial Catalog=MorningBrew;Persist Security Info=True;User ID=sa;Password=Crawler_Brew
     networks:
       crawler-nw:    
+  crawler-hangfire:
+    depends_on:
+      - crawler-sqlserver
+    build:
+      context: .
+      dockerfile: ./src/Hangfire.Runner/Dockerfile
+    ports:
+      - 5000:80
+    environment:
+      - ConnectionStrings:default=Data Source=crawler-sqlserver;Initial Catalog=MorningBrew;Persist Security Info=True;User ID=sa;Password=Crawler_Brew
+      - ConnectionStrings:hangfire=Data Source=crawler-sqlserver;Initial Catalog=Hangfire;Persist Security Info=True;User ID=sa;Password=Crawler_Brew
+    networks:
+      crawler-nw:    
 networks:
   crawler-nw:
     name: crawler-nw
