@@ -12,7 +12,11 @@
     <PackageReference Include="dbup" Version="4.1.0" />
     <PackageReference Include="Hangfire.AspNetCore" Version="1.6.20" />
     <PackageReference Include="HangFire.SqlServer" Version="1.6.20" />
-    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Runner.Commons\Runner.Commons.csproj" />
   </ItemGroup>
 
 </Project>

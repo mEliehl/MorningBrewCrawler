@@ -2,11 +2,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Crawler\Crawler.csproj" />
+    <ProjectReference Include="..\Runner.Commons\Runner.Commons.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.4" />
-    <PackageReference Include="Microsoft.Extensions.Http.Polly" Version="2.1.1" />
   </ItemGroup>
 
   <ItemGroup>

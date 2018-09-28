@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Crawler.Commands;
 using DbUp;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -11,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Runner.StartupBlocks;
 
 namespace Hangfire.Runner
 {
@@ -32,11 +34,16 @@ namespace Hangfire.Runner
             {
                 configuration.UseSqlServerStorage(cs);
             });
+            services
+               .AddHttpClients()
+               .AddRepositories(Configuration)
+               .AddCommanHandlers();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ICommandHandler<CrawlerCommand> command)
         {
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
@@ -51,6 +58,8 @@ namespace Hangfire.Runner
                     Authorization = new[] { new DashboardFilter() }
                 })
                 .UseMvc();
+
+            RecurringJob.AddOrUpdate(() => command.HandleAsync(new CrawlerCommand(100)), "0 9 * * 1-5");
         }
     }
 }
