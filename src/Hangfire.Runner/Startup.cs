@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Crawler.Commands;
 using DbUp;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Runner.StartupBlocks;
 
 namespace Hangfire.Runner
@@ -59,7 +52,7 @@ namespace Hangfire.Runner
                 })
                 .UseMvc();
 
-            RecurringJob.AddOrUpdate(() => command.HandleAsync(new CrawlerCommand(100)), "0 9 * * 1-5");
+            RecurringJob.AddOrUpdate(() => command.HandleAsync(100), "0 9 * * 1-5");
         }
     }
 }

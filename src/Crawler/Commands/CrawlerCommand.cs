@@ -1,20 +1,19 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Crawler.Entities;
-using System.Linq;
+using Crawler.HttpClients;
 using Crawler.Mappers;
 using Crawler.Repositories;
-using Crawler.HttpClients;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Crawler.Commands
 {
     public class CrawlerCommand : ICommand
     {
-        public CrawlerCommand(uint pageLimit)
-        {
-            this.pageLimit = pageLimit;
-        }
-        public uint pageLimit { get; }
+        public CrawlerCommand(uint pageLimit) => this.PageLimit = pageLimit;
+        public uint PageLimit { get; }
+
+        public static implicit operator CrawlerCommand(uint pageLimit) => new CrawlerCommand(pageLimit);
     }
 
     class NewArticles
@@ -38,11 +37,11 @@ namespace Crawler.Commands
         public async Task HandleAsync(CrawlerCommand command)
         {
             var entities = new List<Article>();
-            for (int i = 1; i <= command.pageLimit; i++)
+            for (int i = 1; i <= command.PageLimit; i++)
             {
                 var page = await morningBrewClient.GetPageAsync(i);
                 var extractedArticles = MorningBrewMapperPage.Map(page);
-                var newArticles = await GetNewArticles(extractedArticles);
+                var newArticles = await GetNewArticlesAsync(extractedArticles);
                 entities.AddRange(newArticles.Articles);
                 if (!newArticles.HasMore)
                     break;
@@ -50,7 +49,7 @@ namespace Crawler.Commands
             await articles.Add(entities);
         }
 
-        private async Task<NewArticles> GetNewArticles(IEnumerable<Article> entities)
+        private async Task<NewArticles> GetNewArticlesAsync(IEnumerable<Article> entities)
         {
             var @return = new NewArticles() { HasMore = true };
             var groupedArticles = entities.OrderByDescending(o => o.Date).GroupBy(g => g.Date);
