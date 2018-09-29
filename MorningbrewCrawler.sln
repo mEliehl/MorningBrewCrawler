@@ -5,26 +5,41 @@ VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{ADC6C97D-ABF6-4FF1-8F36-FA6D3F20ECDB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crawler", "src\Crawler\Crawler.csproj", "{5A2BC521-E037-4DBD-A294-D8F36C3872DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crawler", "src\Crawler\Crawler.csproj", "{5A2BC521-E037-4DBD-A294-D8F36C3872DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Runner", "src\Runner\Runner.csproj", "{9EF1763C-586B-40AA-81E2-534D4A772A11}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Runner", "src\Runner\Runner.csproj", "{9EF1763C-586B-40AA-81E2-534D4A772A11}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{1E56EC44-948E-4113-B3E6-EDB2A13C236E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Crawler.Test", "tests\Crawler.Test\Crawler.Test.csproj", "{6B528A96-AFBC-42AC-8FE5-3190AFBECE1E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crawler.Test", "tests\Crawler.Test\Crawler.Test.csproj", "{6B528A96-AFBC-42AC-8FE5-3190AFBECE1E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlServer.Migration.DbUp", "src\SqlServer.Migration.DbUp\SqlServer.Migration.DbUp.csproj", "{CD0318C5-32FA-4B76-B540-4F1C83899E31}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SqlServer.Migration.DbUp", "src\SqlServer.Migration.DbUp\SqlServer.Migration.DbUp.csproj", "{CD0318C5-32FA-4B76-B540-4F1C83899E31}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlServer.Migration.Fluent", "src\SqlServer.Migration.Fluent\SqlServer.Migration.Fluent.csproj", "{1AF9EF8D-6841-495B-A38A-42BD79F32FFC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SqlServer.Migration.Fluent", "src\SqlServer.Migration.Fluent\SqlServer.Migration.Fluent.csproj", "{1AF9EF8D-6841-495B-A38A-42BD79F32FFC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hangfire.Runner", "src\Hangfire.Runner\Hangfire.Runner.csproj", "{8F378B90-DCE6-41CE-ADF1-738B72CAAB59}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hangfire.Runner", "src\Hangfire.Runner\Hangfire.Runner.csproj", "{8F378B90-DCE6-41CE-ADF1-738B72CAAB59}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Runner.Commons", "src\Runner.Commons\Runner.Commons.csproj", "{8582A3AD-AD90-45B5-BA38-B75167B0153E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Runner.Commons", "src\Runner.Commons\Runner.Commons.csproj", "{8582A3AD-AD90-45B5-BA38-B75167B0153E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A33CEFB2-97E2-46AC-8965-15651349DF91}"
+	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
+		.editorconfig = .editorconfig
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+		.vsts-ci.yml = .vsts-ci.yml
+		.vsts-win-ci.yml = .vsts-win-ci.yml
+		build.cake = build.cake
+		build.ps1 = build.ps1
+		build.sh = build.sh
+		Directory.Build.props = Directory.Build.props
+		docker-compose.yml = docker-compose.yml
+		global.json = global.json
+		LICENSE.txt = LICENSE.txt
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
@@ -119,6 +134,9 @@ Global
 		{8582A3AD-AD90-45B5-BA38-B75167B0153E}.Release|x86.ActiveCfg = Release|Any CPU
 		{8582A3AD-AD90-45B5-BA38-B75167B0153E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{5A2BC521-E037-4DBD-A294-D8F36C3872DA} = {ADC6C97D-ABF6-4FF1-8F36-FA6D3F20ECDB}
 		{9EF1763C-586B-40AA-81E2-534D4A772A11} = {ADC6C97D-ABF6-4FF1-8F36-FA6D3F20ECDB}
@@ -127,5 +145,8 @@ Global
 		{1AF9EF8D-6841-495B-A38A-42BD79F32FFC} = {ADC6C97D-ABF6-4FF1-8F36-FA6D3F20ECDB}
 		{8F378B90-DCE6-41CE-ADF1-738B72CAAB59} = {ADC6C97D-ABF6-4FF1-8F36-FA6D3F20ECDB}
 		{8582A3AD-AD90-45B5-BA38-B75167B0153E} = {ADC6C97D-ABF6-4FF1-8F36-FA6D3F20ECDB}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AE8B2611-510F-4CF7-812B-5E22686DCBB7}
 	EndGlobalSection
 EndGlobal
