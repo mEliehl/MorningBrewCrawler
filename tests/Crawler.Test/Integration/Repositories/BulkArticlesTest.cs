@@ -1,13 +1,13 @@
-using System;
-using System.Data.SqlClient;
-using System.Threading.Tasks;
 using Crawler.Entities;
 using Crawler.Repositories;
 using Crawler.SqlServer;
-using Xunit;
+using Crawler.Test.TestDataBuilder;
 using Dapper;
 using FluentAssertions;
-using Crawler.Test.TestDataBuilder;
+using System;
+using System.Data.SqlClient;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace Crawler.Test.Integration.Repositories
 {
@@ -17,7 +17,7 @@ namespace Crawler.Test.Integration.Repositories
     {
         readonly IArticles articles;
         readonly SqlServerSettings settings;
-    
+
         public BulkArticlesTest(DatabaseFixture fixture)
         {
             settings = TestHelper.GetConfiguration().SqlServerSettings();
@@ -65,6 +65,6 @@ namespace Crawler.Test.Integration.Repositories
                     articleId
                 });
             }
-        }        
+        }
     }
 }

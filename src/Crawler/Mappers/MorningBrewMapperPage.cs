@@ -1,7 +1,7 @@
-using System.Collections.Generic;
-using System.Web;
 using Crawler.Entities;
 using Crawler.PageProcessors;
+using System.Collections.Generic;
+using System.Web;
 
 namespace Crawler.Mappers
 {

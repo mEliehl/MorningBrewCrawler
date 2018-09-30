@@ -1,10 +1,10 @@
+using Crawler.Entities;
+using Crawler.Mappers;
+using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Crawler.Entities;
-using Crawler.Mappers;
-using HtmlAgilityPack;
 
 namespace Crawler.PageProcessors
 {
@@ -13,7 +13,7 @@ namespace Crawler.PageProcessors
         public IEnumerable<Article> Map(string page)
         {
             page = HttpUtility.HtmlDecode(page);
-            
+
             var @return = new List<Article>();
             var doc = new HtmlDocument();
             doc.LoadHtml(page);
@@ -43,7 +43,7 @@ namespace Crawler.PageProcessors
 
         private DateTime ExtractPostDate(string postDate)
         {
-            var split = postDate.Split(' ');            
+            var split = postDate.Split(' ');
             var day = split[1];
             day = day.Substring(0, day.Length - 2);
             var month = EnglishMonths.Map(split[2]);
@@ -89,8 +89,8 @@ namespace Crawler.PageProcessors
         private IEnumerable<string> ExtractAuthorsName(string normalizedAuthorsNames)
         {
             return normalizedAuthorsNames
-                .Split('&',',')
-                .Select(s => s.Trim());            
+                .Split('&', ',')
+                .Select(s => s.Trim());
         }
     }
 }

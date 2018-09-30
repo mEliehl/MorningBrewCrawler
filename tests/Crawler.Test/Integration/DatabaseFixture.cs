@@ -1,13 +1,13 @@
-using System;
-using System.Data.SqlClient;
 using Crawler.SqlServer;
 using Dapper;
+using System;
+using System.Data.SqlClient;
 
 namespace Crawler.Test.Integration
 {
     public class DatabaseFixture : IDisposable
     {
-        readonly SqlServerSettings settings;        
+        readonly SqlServerSettings settings;
         public DatabaseFixture()
         {
             settings = TestHelper.GetConfiguration().SqlServerSettings();
@@ -17,7 +17,7 @@ namespace Crawler.Test.Integration
             using (var connection = new SqlConnection(settings.ConnectionString))
             {
                 connection.Execute("delete from Article");
-            }            
+            }
         }
     }
 }

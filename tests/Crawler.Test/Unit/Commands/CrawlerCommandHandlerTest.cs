@@ -1,12 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Crawler.Commands;
 using Crawler.Entities;
 using Crawler.HttpClients;
 using Crawler.Repositories;
 using Crawler.Test.PageProcessors.HtmlPages;
 using Moq;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Crawler.Test.Commands
@@ -26,7 +26,7 @@ namespace Crawler.Test.Commands
             var mochHttpHandler = new Mock<IMorningBrewClient>();
             mochHttpHandler.Setup(s => s.GetPageAsync(1)).ReturnsAsync(ReadTextFromHtml.FromHtmlFile("morningbrew06072018.html"));
 
-            handler = new CrawlerCommandHandler(mochHttpHandler.Object,mockArticles.Object);
+            handler = new CrawlerCommandHandler(mochHttpHandler.Object, mockArticles.Object);
         }
 
         [Fact]
@@ -35,18 +35,18 @@ namespace Crawler.Test.Commands
             await handler.HandleAsync(new CrawlerCommand(1));
 
             mockArticles.Verify(s => s.Add(It.IsAny<IEnumerable<Article>>()), Times.Once());
-            mockArticles.Verify(s => s.AnyWithDate(It.IsAny<DateTime>()),Times.Exactly(3));
+            mockArticles.Verify(s => s.AnyWithDate(It.IsAny<DateTime>()), Times.Exactly(3));
         }
 
         [Fact]
         public async Task WithOnlyOldArticles_CallAnyWithDateOnce()
         {
             mockArticles.Setup(s => s.AnyWithDate(It.IsAny<DateTime>())).ReturnsAsync(true);
-            
+
             await handler.HandleAsync(new CrawlerCommand(1));
 
             mockArticles.Verify(s => s.Add(It.IsAny<IEnumerable<Article>>()), Times.Once());
-            mockArticles.Verify(s => s.AnyWithDate(It.IsAny<DateTime>()),Times.Once());
+            mockArticles.Verify(s => s.AnyWithDate(It.IsAny<DateTime>()), Times.Once());
         }
 
         [Fact]
@@ -55,11 +55,11 @@ namespace Crawler.Test.Commands
             mockArticles.SetupSequence(s => s.AnyWithDate(It.IsAny<DateTime>()))
                 .ReturnsAsync(false)
                 .ReturnsAsync(true);
-            
+
             await handler.HandleAsync(new CrawlerCommand(1));
 
             mockArticles.Verify(s => s.Add(It.IsAny<IEnumerable<Article>>()), Times.Once());
-            mockArticles.Verify(s => s.AnyWithDate(It.IsAny<DateTime>()),Times.Exactly(2));
+            mockArticles.Verify(s => s.AnyWithDate(It.IsAny<DateTime>()), Times.Exactly(2));
         }
     }
 }

@@ -1,11 +1,11 @@
-﻿using System;
-using System.IO;
 using DbUp;
 using DocoptNet;
 using FluentMigrator.Runner;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SqlServer.Migration.Fluent.Migrations;
+using System;
+using System.IO;
 
 namespace SqlServer.Migration.Fluent
 {
@@ -15,7 +15,7 @@ namespace SqlServer.Migration.Fluent
         {
             MainArgs argument;
             try
-            {                
+            {
                 argument = new MainArgs(args);
                 var builder = new ConfigurationBuilder()
                 .SetBasePath(Path.Combine(AppContext.BaseDirectory))
@@ -24,10 +24,10 @@ namespace SqlServer.Migration.Fluent
 
                 IConfigurationRoot configuration = builder.Build();
 
-                var serviceProvider = CreateServices(configuration);                
+                var serviceProvider = CreateServices(configuration);
                 using (var scope = serviceProvider.CreateScope())
                 {
-                    EnsureDatabase.For.SqlDatabase(configuration.GetConnectionString("default"));                    
+                    EnsureDatabase.For.SqlDatabase(configuration.GetConnectionString("default"));
                     System.Console.WriteLine("criado!!");
                     UpdateDatabase(scope.ServiceProvider, argument);
                 }
@@ -48,7 +48,7 @@ namespace SqlServer.Migration.Fluent
             return new ServiceCollection()
                 .AddFluentMigratorCore()
                 .ConfigureRunner(rb => rb
-                    .AddSqlServer()                    
+                    .AddSqlServer()
                     .WithGlobalConnectionString(configuration.GetConnectionString("default"))
                     .ScanIn(typeof(CreateArticleTable).Assembly).For.Migrations())
                 .AddLogging(lb => lb.AddFluentMigratorConsole())

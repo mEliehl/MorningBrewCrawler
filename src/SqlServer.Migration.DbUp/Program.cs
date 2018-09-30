@@ -1,10 +1,8 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
 using DbUp;
 using Microsoft.Extensions.Configuration;
+using System;
+using System.IO;
+using System.Reflection;
 
 namespace SqlServer.Migration.DbUp
 {
@@ -19,9 +17,9 @@ namespace SqlServer.Migration.DbUp
 
             IConfigurationRoot configuration = builder.Build();
 
-            var connectionString =configuration.GetConnectionString("default");
+            var connectionString = configuration.GetConnectionString("default");
             EnsureDatabase.For.SqlDatabase(connectionString);
-            
+
             var upgrader =
                 DeployChanges.To
                     .SqlDatabase(connectionString)
@@ -40,7 +38,7 @@ namespace SqlServer.Migration.DbUp
 
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Success!");
-            Console.ResetColor();            
+            Console.ResetColor();
         }
     }
 }

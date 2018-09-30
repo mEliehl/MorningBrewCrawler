@@ -4,6 +4,6 @@ namespace Crawler.HttpClients
 {
     public interface IMorningBrewClient
     {
-         Task<string> GetPageAsync(int page);
+        Task<string> GetPageAsync(int page);
     }
 }

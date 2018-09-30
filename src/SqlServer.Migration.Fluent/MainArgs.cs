@@ -1,5 +1,5 @@
-using System.Linq;
 using DocoptNet;
+using System.Linq;
 
 namespace SqlServer.Migration.Fluent
 {

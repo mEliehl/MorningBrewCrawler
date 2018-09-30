@@ -10,7 +10,7 @@ namespace Crawler.Commands
 {
     public class CrawlerCommand : ICommand
     {
-        public CrawlerCommand(uint pageLimit) => this.PageLimit = pageLimit;
+        public CrawlerCommand(uint pageLimit) => PageLimit = pageLimit;
         public uint PageLimit { get; }
 
         public static implicit operator CrawlerCommand(uint pageLimit) => new CrawlerCommand(pageLimit);
@@ -37,7 +37,7 @@ namespace Crawler.Commands
         public async Task HandleAsync(CrawlerCommand command)
         {
             var entities = new List<Article>();
-            for (int i = 1; i <= command.PageLimit; i++)
+            for (var i = 1; i <= command.PageLimit; i++)
             {
                 var page = await morningBrewClient.GetPageAsync(i);
                 var extractedArticles = MorningBrewMapperPage.Map(page);

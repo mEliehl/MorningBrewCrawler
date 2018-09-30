@@ -4,7 +4,7 @@ namespace Crawler.Commands
 {
     public interface ICommand
     {
-         
+
     }
 
     public interface ICommandHandler<TCommand> where TCommand : ICommand

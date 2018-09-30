@@ -1,9 +1,8 @@
-using System.Collections.Generic;
-using System.Linq;
 using Crawler.Entities;
 using Crawler.PageProcessors;
 using Crawler.Test.PageProcessors.HtmlPages;
 using FluentAssertions;
+using System.Linq;
 using Xunit;
 
 namespace Crawler.Test.PageProcessors

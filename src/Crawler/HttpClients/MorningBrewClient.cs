@@ -14,7 +14,7 @@ namespace Crawler.HttpClients
 
         public async Task<string> GetPageAsync(int page)
         {
-             return await client.GetStringAsync($"/page/{page}/");
+            return await client.GetStringAsync($"/page/{page}/");
         }
     }
 }

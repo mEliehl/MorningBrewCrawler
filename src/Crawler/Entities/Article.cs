@@ -12,7 +12,7 @@ namespace Crawler.Entities
             Date = date;
             Link = link;
             Title = title;
-            Authors = authors.Select(a => new Author(Id,a));
+            Authors = authors.Select(a => new Author(Id, a));
         }
 
         public Guid Id { get; private set; }

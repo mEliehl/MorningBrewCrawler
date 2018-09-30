@@ -1,6 +1,6 @@
-using System.IO;
 using Crawler.SqlServer;
 using Microsoft.Extensions.Configuration;
+using System.IO;
 
 namespace Crawler.Test.Integration
 {

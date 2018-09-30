@@ -1,10 +1,10 @@
+using Crawler.Entities;
+using Crawler.Repositories;
+using Dapper;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
-using Crawler.Entities;
-using Crawler.Repositories;
-using Dapper;
 
 namespace Crawler.SqlServer
 {
@@ -19,7 +19,7 @@ namespace Crawler.SqlServer
 
         public async Task Add(IEnumerable<Article> articles)
         {
-            await BulkArticles.Add(articles,settings.ConnectionString);
+            await BulkArticles.Add(articles, settings.ConnectionString);
         }
 
         public async Task<bool> AnyWithDate(DateTime date)

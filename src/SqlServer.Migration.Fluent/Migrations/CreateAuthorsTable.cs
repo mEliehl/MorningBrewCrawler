@@ -1,6 +1,6 @@
+using FluentMigrator;
 using System;
 using System.IO;
-using FluentMigrator;
 
 namespace SqlServer.Migration.Fluent.Migrations
 {
@@ -9,13 +9,13 @@ namespace SqlServer.Migration.Fluent.Migrations
     {
         public override void Up()
         {
-            var script = Path.Combine(AppContext.BaseDirectory,"Scripts","CreateAuthorTableUp.sql");
-            Execute.Script(script);            
+            var script = Path.Combine(AppContext.BaseDirectory, "Scripts", "CreateAuthorTableUp.sql");
+            Execute.Script(script);
         }
 
         public override void Down()
         {
-            var script = Path.Combine(AppContext.BaseDirectory,"Scripts","CreateAuthorTableDown.sql");
+            var script = Path.Combine(AppContext.BaseDirectory, "Scripts", "CreateAuthorTableDown.sql");
             Execute.Script(script);
         }
     }

@@ -1,8 +1,8 @@
+using Crawler.Commands;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Crawler.Commands;
-using Microsoft.Extensions.Hosting;
 
 namespace Runner.HostedServices
 {
@@ -22,7 +22,7 @@ namespace Runner.HostedServices
         public Task StartAsync(CancellationToken cancellationToken)
         {
             Console.WriteLine($"Starting runner in Utc: {DateTime.UtcNow}");
-            
+
             Console.WriteLine($"Crawler will be executed in UTC: {options.GetScheduledTime()}");
 
             var untilScheduled = new TimeSpan((options.GetScheduledTime() - DateTime.UtcNow).Ticks);

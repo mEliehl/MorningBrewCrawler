@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using Crawler.Entities;
+using System.Collections.Generic;
 
 namespace Crawler.PageProcessors
 {

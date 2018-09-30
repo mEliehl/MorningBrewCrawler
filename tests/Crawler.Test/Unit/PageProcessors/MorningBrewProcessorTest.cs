@@ -1,10 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Crawler.Entities;
 using Crawler.PageProcessors;
 using Crawler.Test.PageProcessors.HtmlPages;
 using FluentAssertions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace Crawler.Test.PageProcessors
@@ -50,9 +50,9 @@ namespace Crawler.Test.PageProcessors
 
         [Fact]
         public void CheckAuthorsHasSameArticleId()
-        {            
+        {
             foreach (var article in articles)
-                article.Authors.Should().OnlyContain(o => o.ArticleId == article.Id);            
+                article.Authors.Should().OnlyContain(o => o.ArticleId == article.Id);
         }
 
         [Theory]
