@@ -2,8 +2,7 @@ version: '3.5'
 
 services:
   crawler-sqlserver:
-    image: microsoft/mssql-server-linux
-    # image: microsoft/mssql-server-windows-developer
+    image: mcr.microsoft.com/mssql/server 
     hostname: crawler-sqlserver
     ports:
       - "1433:1433"

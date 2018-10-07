@@ -17,7 +17,7 @@ steps:
   inputs:
     containerregistrytype: 'Container Registry'
     command: 'Run an image'
-    imageName: 'microsoft/mssql-server-linux'
+    imageName: 'mcr.microsoft.com/mssql/server'
     containerName: sqlserver
     ports: '1433:1433'
     envVars: |
