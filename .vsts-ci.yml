@@ -5,9 +5,9 @@ queue: 'Hosted Linux Preview'
 
 steps:
 - task: DotNetCoreInstaller@0
-  displayName: Use .NET Core sdk 2.1.402
+  displayName: Use .NET Core sdk 2.1.403
   inputs:
-    version: 2.1.402
+    version: 2.1.403
 
 - bash: . build.sh -target=BuildAndUnitTest
   displayName: Bash Cake Script

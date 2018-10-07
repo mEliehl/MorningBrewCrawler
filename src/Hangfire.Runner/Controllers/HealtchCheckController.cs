@@ -8,9 +8,6 @@ namespace Hangfire.Runner.Controllers
     {
         // GET api/values
         [HttpGet]
-        public ActionResult<bool> Get()
-        {
-            return true;
-        }
+        public ActionResult<bool> Get() => true;
     }
 }

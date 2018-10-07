@@ -15,11 +15,12 @@ namespace Crawler.SqlServer
             using (var connection = new SqlConnection(connectionString))
             {
                 await connection.OpenAsync();
-                using (SqlTransaction transcation = connection.BeginTransaction())
+                using (var transcation = connection.BeginTransaction())
                 {
-                    SqlBulkCopy bulk = new SqlBulkCopy(connection, SqlBulkCopyOptions.Default, transcation);
-
-                    bulk.DestinationTableName = "Article";
+                    var bulk = new SqlBulkCopy(connection, SqlBulkCopyOptions.Default, transcation)
+                    {
+                        DestinationTableName = "Article"
+                    };
                     var dtArticles = MakeArticleTable(articles);
                     await bulk.WriteToServerAsync(dtArticles);
 
@@ -45,15 +46,12 @@ namespace Crawler.SqlServer
             return dt;
         }
 
-        private static object[] MakeArticleRow(Article article)
-        {
-            return new object[]{
+        private static object[] MakeArticleRow(Article article) => new object[]{
                 article.Id,
                 article.Date,
                 article.Link,
                 article.Title
             };
-        }
 
         private static DataTable MakeAuthorTable(IEnumerable<Author> authors)
         {
@@ -66,12 +64,9 @@ namespace Crawler.SqlServer
             return dt;
         }
 
-        private static object[] MakeAuthorRow(Author author)
-        {
-            return new object[]{
+        private static object[] MakeAuthorRow(Author author) => new object[]{
                 author.ArticleId,
                 author.Name
             };
-        }
     }
 }
