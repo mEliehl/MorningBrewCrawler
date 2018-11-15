@@ -7,7 +7,7 @@ steps:
 - task: DotNetCoreInstaller@0
   displayName: Use .NET Core sdk 2.1.403
   inputs:
-    version: 2.1.403
+    version: 2.1.500
 
 - bash: . build.sh -target=BuildAndUnitTest
   displayName: Bash Cake Script
@@ -27,7 +27,7 @@ steps:
 
 - bash: |
    IP=`docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' sqlserver`
-   echo "##vso[task.setvariable variable=SqlServer:Host;]$IP" 
+   echo "##vso[task.setvariable variable=SqlServer:Host;]$IP"
   displayName: 'Get docker sqlserver Ip'
 
 - bash: . build.sh -target=MigrationAndIntegrationTest
@@ -46,7 +46,7 @@ steps:
     searchFolder: '$(build.SourcesDirectory)/tests/Artifacts'
   continueOnError: true
   condition: succeededOrFailed()
-  
+
 - task: PublishCodeCoverageResults@1
   displayName: Publish code coverage from coverage.cobertura.xml
   inputs:
