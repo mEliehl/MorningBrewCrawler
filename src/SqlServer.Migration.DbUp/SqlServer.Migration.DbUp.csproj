@@ -2,17 +2,17 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Scripts\Script0001-CreateArticleTable.sql" />  
-    <EmbeddedResource Include="Scripts\Script0002-CreateAuthorTable.sql" />      
+    <EmbeddedResource Include="Scripts\Script0001-CreateArticleTable.sql" />
+    <EmbeddedResource Include="Scripts\Script0002-CreateAuthorTable.sql" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="dbup" Version="4.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.6" />
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>
